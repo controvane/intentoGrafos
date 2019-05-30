@@ -78,7 +78,8 @@ namespace intentoGrafos
         private void botonEliminar_Click(object sender, EventArgs e)
         {
             String nombre = textoNodo1.Text +"-"+ textoNodo2.Text;
-            this.grafo.deleteConection(nombre);
+            bool eliminar = this.grafo.deleteConection(nombre);
+            MessageBox.Show((eliminar) ? "Se elimino la conexion exitosamente":"No se elimino la conexion");
         }
     }
 }

@@ -161,15 +161,19 @@ namespace intentoGrafos
         }
 
         public bool deleteConection(String nombreConexion) {
-            foreach (Nodo nodo in this.Nodos) {
-                if (nodo.ListaConexiones.Exists(x => x.Nombre.CompareTo(nombreConexion) == 0)) {
-                    nodo.ListaConexiones.Remove(nodo.ListaConexiones.Find(x => x.Nombre.CompareTo(nombreConexion) == 0));
-                    if (nodo.ListaConexiones.Count <= 0) {
-                        this.Nodos.Remove(Nodos.Find(x => x.Nombre.CompareTo(nodo.Nombre) == 0));
+            int eliminados = 0;
+            //Busca en todos los nodos si tienen la conexion a borrar y la borra
+            //Luego si era la unica conexion del nodo, borra el nodo
+            for(int i = 0; i <this.Nodos.Count ; i++) {
+                if (Nodos[i].ListaConexiones.Exists(x => x.Nombre.CompareTo(nombreConexion) == 0)) {
+                    Nodos[i].ListaConexiones.Remove(Nodos[i].ListaConexiones.Find(x => x.Nombre.CompareTo(nombreConexion) == 0));
+                    eliminados++;
+                    if (Nodos[i].isAlone()) {
+                        this.Nodos.Remove(Nodos.Find(x => x.Nombre.CompareTo(Nodos[i].Nombre) == 0));
                     }
                 }
             }
-            return true;
+            return (eliminados == 0)? false : true;
         }
     }
 }

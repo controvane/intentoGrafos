@@ -41,6 +41,7 @@
             this.textoPeso = new System.Windows.Forms.TextBox();
             this.labelPeso = new System.Windows.Forms.Label();
             this.botonEliminar = new System.Windows.Forms.Button();
+            this.labelEliminarInstrucciones = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelNodo1
@@ -149,11 +150,22 @@
             this.botonEliminar.UseVisualStyleBackColor = true;
             this.botonEliminar.Click += new System.EventHandler(this.botonEliminar_Click);
             // 
+            // labelEliminarInstrucciones
+            // 
+            this.labelEliminarInstrucciones.AutoSize = true;
+            this.labelEliminarInstrucciones.Location = new System.Drawing.Point(391, 250);
+            this.labelEliminarInstrucciones.Name = "labelEliminarInstrucciones";
+            this.labelEliminarInstrucciones.Size = new System.Drawing.Size(367, 34);
+            this.labelEliminarInstrucciones.TabIndex = 12;
+            this.labelEliminarInstrucciones.Text = "Declare la conexion escribiendo el nodo inicial en nodo 1\r\ny el nodo final en nod" +
+    "o 2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelEliminarInstrucciones);
             this.Controls.Add(this.botonEliminar);
             this.Controls.Add(this.textoPeso);
             this.Controls.Add(this.labelPeso);
@@ -188,6 +200,7 @@
         private System.Windows.Forms.TextBox textoPeso;
         private System.Windows.Forms.Label labelPeso;
         private System.Windows.Forms.Button botonEliminar;
+        private System.Windows.Forms.Label labelEliminarInstrucciones;
     }
 }
 
