@@ -81,5 +81,10 @@ namespace intentoGrafos
             bool eliminar = this.grafo.deleteConection(nombre);
             MessageBox.Show((eliminar) ? "Se elimino la conexion exitosamente":"No se elimino la conexion");
         }
+
+        private void botonDijkstra_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this.grafo.printableDijkstraNoDirigido(this.textoNodo1.Text, this.textoNodo2.Text));
+        }
     }
 }

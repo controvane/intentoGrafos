@@ -42,6 +42,8 @@
             this.labelPeso = new System.Windows.Forms.Label();
             this.botonEliminar = new System.Windows.Forms.Button();
             this.labelEliminarInstrucciones = new System.Windows.Forms.Label();
+            this.botonDijkstra = new System.Windows.Forms.Button();
+            this.labelDijkstra = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelNodo1
@@ -160,11 +162,33 @@
             this.labelEliminarInstrucciones.Text = "Declare la conexion escribiendo el nodo inicial en nodo 1\r\ny el nodo final en nod" +
     "o 2";
             // 
+            // botonDijkstra
+            // 
+            this.botonDijkstra.Location = new System.Drawing.Point(480, 306);
+            this.botonDijkstra.Name = "botonDijkstra";
+            this.botonDijkstra.Size = new System.Drawing.Size(200, 23);
+            this.botonDijkstra.TabIndex = 13;
+            this.botonDijkstra.Text = "Buscar ruta mas corta";
+            this.botonDijkstra.UseVisualStyleBackColor = true;
+            this.botonDijkstra.Click += new System.EventHandler(this.botonDijkstra_Click);
+            // 
+            // labelDijkstra
+            // 
+            this.labelDijkstra.AutoSize = true;
+            this.labelDijkstra.Location = new System.Drawing.Point(391, 332);
+            this.labelDijkstra.Name = "labelDijkstra";
+            this.labelDijkstra.Size = new System.Drawing.Size(348, 51);
+            this.labelDijkstra.TabIndex = 14;
+            this.labelDijkstra.Text = "Buscara la ruta mas corta entre el Nodo 1 y el Nodo 2\r\nignora la direccion de las" +
+    " conexiones\r\n(simula que el grafo sea no dirigido)";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelDijkstra);
+            this.Controls.Add(this.botonDijkstra);
             this.Controls.Add(this.labelEliminarInstrucciones);
             this.Controls.Add(this.botonEliminar);
             this.Controls.Add(this.textoPeso);
@@ -201,6 +225,8 @@
         private System.Windows.Forms.Label labelPeso;
         private System.Windows.Forms.Button botonEliminar;
         private System.Windows.Forms.Label labelEliminarInstrucciones;
+        private System.Windows.Forms.Button botonDijkstra;
+        private System.Windows.Forms.Label labelDijkstra;
     }
 }
 

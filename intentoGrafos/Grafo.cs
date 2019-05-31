@@ -175,5 +175,68 @@ namespace intentoGrafos
             }
             return (eliminados == 0)? false : true;
         }
+
+        //esta ignorando la direccion del grafo, despues es dijkstra normal
+        public List<Conexion> DijkstraNoDirigido(string nodoInicio, string nodoFin,List<Nodo> nodosVisitados = null) {
+            if (nodosVisitados == null) {
+                nodosVisitados = new List<Nodo>();
+            }
+            Nodo nodoInicial = this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio) == 0);
+            Nodo nodoFinal = this.Nodos.Find(x => x.Nombre.CompareTo(nodoFin) == 0);
+            List<Conexion> conexiones = new List<Conexion>();
+            //solo estoy agregando una conexion token para comparar
+            //su peso es de infinito
+            conexiones.Add(new Conexion(new Nodo("ej1"), new Nodo("ej2"),double.PositiveInfinity));
+            //esto ignora la direccion, habria que quitear la primera condicion del exists
+            if (nodoInicial.ListaConexiones.Exists(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0))) {
+                conexiones.Clear();
+                conexiones.Add(nodoInicial.ListaConexiones.Find(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)));
+                return conexiones;
+            }
+            //la idea es que revise el peso de cada conexion y lo ponga temporalmente en conexiones, quedandose siempre con el menor
+            //Se me acabaron las ideas para nombres de variables... lo siento
+            foreach (Conexion conexita in nodoInicial.ListaConexiones) {
+                nodosVisitados.Add(nodoInicial);
+                //Como tiene que ignorar la direccion, checkeo si el nodo final o el inicial de la conexion son el nodo actual
+                if (conexita.NodoFinal.Nombre.CompareTo(nodoInicial.Nombre) == 0)
+                {
+                    //verifica si la ruta tentativa es mas corta que la ruta actual y escoge la mas corta
+                    List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoInicio.Nombre, nodoFin, nodosVisitados);
+                    if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta)) {
+                        conexiones.Clear();
+                        conexiones.AddRange(posibleRuta);
+                    }
+                }
+                else if (conexita.NodoInicio.Nombre.CompareTo(nodoInicial.Nombre) == 0) {
+                    //Lo mismo que en el anterior, pero con el otro nodo, para ignorar la direccion
+                    List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoFinal.Nombre, nodoFin, nodosVisitados);
+                    if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta))
+                    {
+                        conexiones.Clear();
+                        conexiones.AddRange(posibleRuta);
+                    }
+                }
+            }
+            return conexiones;
+        }
+
+        //solo imprime dijstra, no quiero importar Conexion a Form 1
+        public String printableDijkstraNoDirigido(String nodoInicial, String nodoFinal) {
+            List<Conexion> rutaCritica = DijkstraNoDirigido(nodoFinal, nodoFinal);
+            String printer = "";
+            foreach (Conexion conexion in rutaCritica) {
+                printer += conexion.Nombre + " Peso: " + conexion.Peso+"\r\n";
+            }
+            printer += sumAllWeights(rutaCritica);
+            return printer;
+        }
+
+        private double sumAllWeights(List<Conexion> conexiones) {
+            double suma = 0;
+            foreach (Conexion conexion in conexiones) {
+                suma += conexion.Peso;
+            }
+            return suma;
+        }
     }
 }
