@@ -187,20 +187,23 @@ namespace intentoGrafos
             //solo estoy agregando una conexion token para comparar
             //su peso es de infinito
             conexiones.Add(new Conexion(new Nodo("ej1"), new Nodo("ej2"),double.PositiveInfinity));
-            //esto ignora la direccion, habria que quitear la primera condicion del exists
-            if (nodoInicial.ListaConexiones.Exists(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0))) {
+            //esto ignora la direccion, habria que quitar la primera condicion del exists
+            if (nodoInicial.ListaConexiones.Exists(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)) && sumAllWeights(conexiones) > nodoInicial.ListaConexiones.Find(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)).Peso) {
                 conexiones.Clear();
                 conexiones.Add(nodoInicial.ListaConexiones.Find(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)));
                 return conexiones;
             }
             //la idea es que revise el peso de cada conexion y lo ponga temporalmente en conexiones, quedandose siempre con el menor
             //Se me acabaron las ideas para nombres de variables... lo siento
+            Console.WriteLine("Nodo Actual: " + nodoInicial.Nombre);
             foreach (Conexion conexita in nodoInicial.ListaConexiones) {
                 nodosVisitados.Add(nodoInicial);
+                Console.WriteLine("Conexion actual: " + conexita.Nombre);
                 //Como tiene que ignorar la direccion, checkeo si el nodo final o el inicial de la conexion son el nodo actual
                 if (conexita.NodoFinal.Nombre.CompareTo(nodoInicial.Nombre) == 0)
                 {
                     //verifica si la ruta tentativa es mas corta que la ruta actual y escoge la mas corta
+                    Console.WriteLine("Conexion actual: " + conexita.Nombre);
                     List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoInicio.Nombre, nodoFin, nodosVisitados);
                     if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta)) {
                         conexiones.Clear();
@@ -217,6 +220,7 @@ namespace intentoGrafos
                     }
                 }
             }
+            Console.WriteLine("Pasando al nodo siguiente\r\n--------------------------------------------");
             return conexiones;
         }
 
@@ -227,7 +231,7 @@ namespace intentoGrafos
             foreach (Conexion conexion in rutaCritica) {
                 printer += conexion.Nombre + " Peso: " + conexion.Peso+"\r\n";
             }
-            printer += sumAllWeights(rutaCritica);
+            printer += "Peso total del recorrido: " + sumAllWeights(rutaCritica);
             return printer;
         }
 
