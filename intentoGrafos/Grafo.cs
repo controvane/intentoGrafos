@@ -170,6 +170,7 @@ namespace intentoGrafos
                     eliminados++;
                     if (Nodos[i].isAlone()) {
                         this.Nodos.Remove(Nodos.Find(x => x.Nombre.CompareTo(Nodos[i].Nombre) == 0));
+                        i--;
                     }
                 }
             }
@@ -178,7 +179,9 @@ namespace intentoGrafos
 
         //esta ignorando la direccion del grafo, despues es dijkstra normal
         public List<Conexion> DijkstraNoDirigido(string nodoInicio, string nodoFin,List<Nodo> nodosVisitados = null) {
+            
             if (nodosVisitados == null) {
+                Console.WriteLine("Estoy declarando la lista");
                 nodosVisitados = new List<Nodo>();
             }
             Nodo nodoInicial = this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio) == 0);
@@ -189,6 +192,7 @@ namespace intentoGrafos
             conexiones.Add(new Conexion(new Nodo("ej1"), new Nodo("ej2"),double.PositiveInfinity));
             //esto ignora la direccion, habria que quitar la primera condicion del exists
             if (nodoInicial.ListaConexiones.Exists(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)) && sumAllWeights(conexiones) > nodoInicial.ListaConexiones.Find(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)).Peso) {
+                Console.WriteLine("voy a devolver la conexion");
                 conexiones.Clear();
                 conexiones.Add(nodoInicial.ListaConexiones.Find(x => (x.NodoInicio.Nombre.CompareTo(nodoFinal.Nombre) == 0) || (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)));
                 return conexiones;
@@ -197,26 +201,43 @@ namespace intentoGrafos
             //Se me acabaron las ideas para nombres de variables... lo siento
             Console.WriteLine("Nodo Actual: " + nodoInicial.Nombre);
             foreach (Conexion conexita in nodoInicial.ListaConexiones) {
-                nodosVisitados.Add(nodoInicial);
                 Console.WriteLine("Conexion actual: " + conexita.Nombre);
                 //Como tiene que ignorar la direccion, checkeo si el nodo final o el inicial de la conexion son el nodo actual
                 if (conexita.NodoFinal.Nombre.CompareTo(nodoInicial.Nombre) == 0)
                 {
-                    //verifica si la ruta tentativa es mas corta que la ruta actual y escoge la mas corta
-                    Console.WriteLine("Conexion actual: " + conexita.Nombre);
-                    List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoInicio.Nombre, nodoFin, nodosVisitados);
-                    if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta)) {
-                        conexiones.Clear();
-                        conexiones.AddRange(posibleRuta);
+                    if (!nodosVisitados.Exists(x => x.Nombre.CompareTo(conexita.NodoFinal.Nombre) == 0)) {
+                        //verifica si la ruta tentativa es mas corta que la ruta actual y escoge la mas corta
+                        
+                        nodosVisitados.Add(nodoInicial);
+                        List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoInicio.Nombre, nodoFin, nodosVisitados);
+                        if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta))
+                        {
+                            conexiones.Clear();
+                            conexiones.Add(conexita);
+                            if (posibleRuta.Count == 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
+                            {
+                                conexiones.AddRange(posibleRuta);
+                            }
+                        }
+                        nodosVisitados.Clear();
                     }
                 }
                 else if (conexita.NodoInicio.Nombre.CompareTo(nodoInicial.Nombre) == 0) {
                     //Lo mismo que en el anterior, pero con el otro nodo, para ignorar la direccion
-                    List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoFinal.Nombre, nodoFin, nodosVisitados);
-                    if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta))
-                    {
-                        conexiones.Clear();
-                        conexiones.AddRange(posibleRuta);
+                    if (!nodosVisitados.Exists(x => x.Nombre.CompareTo(conexita.NodoInicio.Nombre) == 0)) {
+                        Console.WriteLine("Conexion actual: " + conexita.Nombre);
+                        nodosVisitados.Add(nodoInicial);
+                        List<Conexion> posibleRuta = DijkstraNoDirigido(conexita.NodoFinal.Nombre, nodoFin, nodosVisitados);
+                        if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta))
+                        {
+                            conexiones.Clear();
+                            conexiones.Add(conexita);
+                            if (posibleRuta.Count == 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
+                            {
+                                conexiones.AddRange(posibleRuta);
+                            } 
+                        }
+                        nodosVisitados.Clear();
                     }
                 }
             }
@@ -226,7 +247,7 @@ namespace intentoGrafos
 
         //solo imprime dijstra, no quiero importar Conexion a Form 1
         public String printableDijkstraNoDirigido(String nodoInicial, String nodoFinal) {
-            List<Conexion> rutaCritica = DijkstraNoDirigido(nodoFinal, nodoFinal);
+            List<Conexion> rutaCritica = DijkstraNoDirigido(nodoInicial, nodoFinal);
             String printer = "";
             foreach (Conexion conexion in rutaCritica) {
                 printer += conexion.Nombre + " Peso: " + conexion.Peso+"\r\n";
