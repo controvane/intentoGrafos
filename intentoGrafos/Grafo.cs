@@ -113,6 +113,47 @@ namespace intentoGrafos
             return addNodo(nom);
         }
 
+        //Crea conexiones en las dos direcciones entre los nodos para simular que es no dirigido
+        //Descubri con lo del  Dijkstra lo de los valores por defecto XD
+        public bool addNodoNoDirigido(Nodo nodoInicio, string nom, double peso = 1)
+        {
+            if (this.Nodos.Exists(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0))
+            {
+                Console.WriteLine("El nodo inicial existe: " + nodoInicio.Nombre);
+                Console.WriteLine("El nodo nuevo " + nom + " existe?: " + this.Nodos.Exists(x => x.Nombre.CompareTo(nom) == 0));
+                if (this.Nodos.Exists(x => x.Nombre.CompareTo(nom) == 0))
+                {
+                    Console.WriteLine("El nodo final existe: " + nom);
+                    //linea larga y fea, pero solo revisa si la conexion ya existe y devuelve una operacion fallida en ese caso.
+                    if (this.nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.Exists(x => (x.NodoInicio.Nombre.CompareTo(nodoInicio.Nombre) == 0) && (x.NodoFinal.Nombre.CompareTo(nom) == 0)))
+                    {
+                        Console.WriteLine("La conexion ya existe");
+                        return false;
+                    }
+                    //Aqui crea una nueva conexion, como las conexiones son diereccionadas una conexion inversa
+                    //se considera una conexion nueva
+                    Console.WriteLine("Creando nueva conexion entre " + nodoInicio.Nombre + " y " + nom + ".");
+                    Conexion nuevaConexion1 = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0), peso);
+                    Conexion nuevaConexion2 = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0), this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), peso);
+                    this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0).ListaConexiones.AddRange(new List<Conexion>{nuevaConexion1, nuevaConexion2});
+                    this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.AddRange(new List<Conexion> { nuevaConexion1, nuevaConexion2 });
+                }
+                else
+                {
+                    //en caso de que el nodoFinal no exista, crea un nuevo nodo y crea y asigna la nueva conexion
+                    Console.WriteLine("Creando nuevo nodo " + nom + " y conectando a " + nodoInicio.Nombre);
+                    Nodo nodoNuevo = new Nodo(nom);
+                    Conexion nuevaConexion1 = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), nodoNuevo, peso);
+                    Conexion nuevaConexion2 = new Conexion(nodoNuevo, this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), peso);
+                    nodoNuevo.ListaConexiones.AddRange(new List<Conexion> { nuevaConexion1, nuevaConexion2 });
+                    this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.AddRange(new List<Conexion> { nuevaConexion1, nuevaConexion2 });
+                    this.Nodos.Add(nodoNuevo);
+                }
+                return true;
+            }
+            return addNodo(nom);
+        }
+
         public string printRawGraph() {
             string printer = "Nodos: \r\n";
             foreach (Nodo var in this.nodos) {
