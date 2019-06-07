@@ -121,6 +121,7 @@ namespace intentoGrafos
             return addNodo(nom,contenidoNodoNuevo);
         }
 
+        //Pasa el contenido del grafico a un string, pero no tiene nada de interesante a parte de eso
         public string printRawGraph() {
             string printer = "Nodos: \r\n";
             foreach (Nodo var in this.nodos) {
@@ -133,6 +134,7 @@ namespace intentoGrafos
             return printer;
         }
 
+        //Diseña la matriz de conexiones en un string
         public string printConnMatrix() {
             string printer = "Vertices: ";
             int tam = this.Nodos.Count;
@@ -178,6 +180,8 @@ namespace intentoGrafos
                     eliminados++;
                     if (Nodos[i].isAlone()) {
                         this.Nodos.Remove(Nodos.Find(x => x.Nombre.CompareTo(Nodos[i].Nombre) == 0));
+                        //esto es importante, porque al borrar el nodo, la cantidad de nodos se reduce en 1 y para asegurarse de
+                        //iterar bien, hay que retroceder un paso para compensar eso.
                         i--;
                     }
                 }

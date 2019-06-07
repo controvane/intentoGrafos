@@ -12,6 +12,7 @@ namespace intentoGrafos
 {
     public partial class Form1 : Form
     {
+        //Todo este form es solo para probar la clase de grafos, a parte de eso no tiene nada de interesante
         Grafo grafo;
 
         public Form1()
@@ -24,6 +25,9 @@ namespace intentoGrafos
             this.grafo = new Grafo();
             this.labelMensajes.Text = "";
         }
+
+        //Todos los botones hacen algo llamando a alguna funcion del grafo
+        // Este agrega nodos y / o conexiones con direccion
 
         private void botonAgregarNodo_Click(object sender, EventArgs e)
         {
@@ -66,16 +70,19 @@ namespace intentoGrafos
             }
         }
 
+        //esta te imprime una descripcion del grafo
         private void botonPrintRaw_Click(object sender, EventArgs e)
         {
             MessageBox.Show(this.grafo.printRawGraph());
         }
 
+        //esta te imprime la matriz de adyacencia
         private void botonAdyacencia_Click(object sender, EventArgs e)
         {
             MessageBox.Show(this.grafo.printConnMatrix());
         }
 
+        //esta elimina conexiones
         private void botonEliminar_Click(object sender, EventArgs e)
         {
             String nombre = textoNodo1.Text + "-" + textoNodo2.Text;
@@ -83,16 +90,21 @@ namespace intentoGrafos
             MessageBox.Show((eliminar) ? "Se elimino la conexion exitosamente" : "No se elimino la conexion");
         }
 
+        //esta hace Dijkstra entre dos nodos
         private void botonDijkstra_Click(object sender, EventArgs e)
         {
             MessageBox.Show(this.grafo.printableDijkstraNoDirigido(this.textoNodo1.Text, this.textoNodo2.Text));
         }
 
+        //esto es un missclick al diseñar el form y no se como quitarlo sin jorobar al form
+        //tengo que ver como resolverlo, pero tampoco hace nada a parte de estar ahi, asi que
+        //no es muy grave
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
+        //Este boton agrega Nodos y/o conexiones sin direccion
         private void buttonAgregarSinDireccion_Click(object sender, EventArgs e)
         {
             Nodo nodoInicial = new Nodo(this.textoNodo1.Text);

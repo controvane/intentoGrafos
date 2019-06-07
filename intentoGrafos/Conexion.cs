@@ -9,6 +9,7 @@ namespace intentoGrafos
     class Conexion
     {
         //nombre de la conexion, que resume de donde viene y a donde va
+        //Si es necesario que sea mas general, hay que cambiar eso
         private string nombre;
         //estos dos nodos solo tienen que ser referencias a los nodos que contienen a la conexion
         //en su lista de nodos
