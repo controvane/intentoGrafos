@@ -23,11 +23,11 @@ namespace intentoGrafos
 
         //permite agregar el primer Nodo a partir de solo su nombre
         //solo funciona si no hay ningun nodo en el grafo
-        public bool addNodo(string nom) {
+        public bool addNodo(string nom, object contenidoNodoNuevo = null) {
             if (this.Nodos.Count <= 0)
             {
                 Console.WriteLine("creando el primer nodo");
-                this.Nodos.Add(new Nodo(nom));
+                this.Nodos.Add(new Nodo(nom, contenidoNodoNuevo));
                 return true;
             }
             else {
@@ -39,7 +39,8 @@ namespace intentoGrafos
         //en caso de que no exista el nodo inicial, no agrega nada.
         //en caso de que existan el nodo inicial y el final, agrega una nueva conexion
         //Despues de verificar que esa conexion no exista
-        public bool addNodo(Nodo nodoInicio, string nom, double peso = 1)
+        //tambien te acepta ponerle un contenido al nodo, estos son como cajitas que pueden llevar algo
+        public bool addNodo(Nodo nodoInicio, string nom, double peso = 1, object contenidoNodoNuevo = null)
         {
             if (this.Nodos.Exists(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0))
             {
@@ -65,7 +66,7 @@ namespace intentoGrafos
                 {
                     //en caso de que el nodoFinal no exista, crea un nuevo nodo y crea y asigna la nueva conexion
                     Console.WriteLine("Creando nuevo nodo " + nom + " y conectando a " + nodoInicio.Nombre);
-                    Nodo nodoNuevo = new Nodo(nom);
+                    Nodo nodoNuevo = new Nodo(nom,contenidoNodoNuevo);
                     Conexion nuevaConexion = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), nodoNuevo, peso);
                     nodoNuevo.ListaConexiones.Add(nuevaConexion);
                     this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.Add(nuevaConexion);
@@ -73,12 +74,12 @@ namespace intentoGrafos
                 }
                 return true;
             }
-            return addNodo(nom);
+            return addNodo(nom,contenidoNodoNuevo);
         }
 
         //Crea conexiones en las dos direcciones entre los nodos para simular que es no dirigido
         //Descubri con lo del  Dijkstra lo de los valores por defecto XD
-        public bool addNodoNoDirigido(Nodo nodoInicio, string nom, double peso = 1)
+        public bool addNodoNoDirigido(Nodo nodoInicio, string nom, double peso = 1, object contenidoNodoNuevo = null)
         {
             if (this.Nodos.Exists(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0))
             {
@@ -97,6 +98,7 @@ namespace intentoGrafos
                     //se considera una conexion nueva
                     Console.WriteLine("Creando nueva conexion entre " + nodoInicio.Nombre + " y " + nom + ".");
                     Conexion nuevaConexion1 = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0), peso);
+                    Console.WriteLine("Creando nueva conexion entre " + nom + " y " + nodoInicio.Nombre + ".");
                     Conexion nuevaConexion2 = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0), this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), peso);
                     this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0).ListaConexiones.AddRange(new List<Conexion>{nuevaConexion1, nuevaConexion2});
                     this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.AddRange(new List<Conexion> { nuevaConexion1, nuevaConexion2 });
@@ -104,9 +106,11 @@ namespace intentoGrafos
                 else
                 {
                     //en caso de que el nodoFinal no exista, crea un nuevo nodo y crea y asigna la nueva conexion
-                    Console.WriteLine("Creando nuevo nodo " + nom + " y conectando a " + nodoInicio.Nombre);
-                    Nodo nodoNuevo = new Nodo(nom);
+                    Console.WriteLine("Creando nuevo nodo " + nom);
+                    Nodo nodoNuevo = new Nodo(nom,contenidoNodoNuevo);
+                    Console.WriteLine("Creando nueva conexion entre " + nodoInicio.Nombre + " y " + nom + ".");
                     Conexion nuevaConexion1 = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), nodoNuevo, peso);
+                    Console.WriteLine("Creando nueva conexion entre " + nom + " y " + nodoInicio.Nombre + ".");
                     Conexion nuevaConexion2 = new Conexion(nodoNuevo, this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), peso);
                     nodoNuevo.ListaConexiones.AddRange(new List<Conexion> { nuevaConexion1, nuevaConexion2 });
                     this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.AddRange(new List<Conexion> { nuevaConexion1, nuevaConexion2 });
@@ -114,7 +118,7 @@ namespace intentoGrafos
                 }
                 return true;
             }
-            return addNodo(nom);
+            return addNodo(nom,contenidoNodoNuevo);
         }
 
         public string printRawGraph() {

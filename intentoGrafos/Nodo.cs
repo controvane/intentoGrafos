@@ -10,15 +10,19 @@ namespace intentoGrafos
     {
         private string nombre;
         private List<Conexion> listaConexiones;
+        //esto es algo que pueda guardar el nodo
+        private object contenido;
 
-        public Nodo(string nombre)
+        public Nodo(string nombre, object contenido = null)
         {
             this.nombre = nombre;
+            this.contenido = contenido;
             this.ListaConexiones = new List<Conexion>();
         }
 
         public string Nombre { get => nombre;}
         public List<Conexion> ListaConexiones { get => listaConexiones; set => listaConexiones = value;}
+        public object Contenido { get => contenido; set => contenido = value; }
 
         //te dice si el nodo esta conectado a algo, a menos que sea el unico nodo del grafo esto siempre deberia ser falso
         public bool isAlone() {

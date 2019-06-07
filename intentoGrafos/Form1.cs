@@ -32,7 +32,8 @@ namespace intentoGrafos
             try
             {
                 double peso = double.Parse(this.textoPeso.Text);
-                if (peso <= 0) {
+                if (peso <= 0)
+                {
                     throw new Exception();
                 }
                 bool exito = this.grafo.addNodo(nodoInicial, nodoFinal, peso);
@@ -77,14 +78,60 @@ namespace intentoGrafos
 
         private void botonEliminar_Click(object sender, EventArgs e)
         {
-            String nombre = textoNodo1.Text +"-"+ textoNodo2.Text;
+            String nombre = textoNodo1.Text + "-" + textoNodo2.Text;
             bool eliminar = this.grafo.deleteConection(nombre);
-            MessageBox.Show((eliminar) ? "Se elimino la conexion exitosamente":"No se elimino la conexion");
+            MessageBox.Show((eliminar) ? "Se elimino la conexion exitosamente" : "No se elimino la conexion");
         }
 
         private void botonDijkstra_Click(object sender, EventArgs e)
         {
             MessageBox.Show(this.grafo.printableDijkstraNoDirigido(this.textoNodo1.Text, this.textoNodo2.Text));
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonAgregarSinDireccion_Click(object sender, EventArgs e)
+        {
+            Nodo nodoInicial = new Nodo(this.textoNodo1.Text);
+            String nodoFinal = this.textoNodo2.Text;
+            try
+            {
+                double peso = double.Parse(this.textoPeso.Text);
+                if (peso <= 0)
+                {
+                    throw new Exception();
+                }
+                bool exito = this.grafo.addNodoNoDirigido(nodoInicial, nodoFinal, peso);
+                if (exito)
+                {
+                    MessageBox.Show("Nodo o Conexion agregada exitosamente");
+                    /*this.labelMensajes.Text = "Nodo o Conexion agregada exitosamente";
+                    System.Threading.Thread.Sleep(5000);
+                    this.labelMensajes.Text = "";*/
+                }
+                else
+                {
+                    MessageBox.Show("Hubo un error y no se pudo agregar el nuevo nodo o conexion");
+                }
+            }
+            catch (Exception ex)
+            {
+                bool exito = this.grafo.addNodoNoDirigido(nodoInicial, nodoFinal);
+                if (exito)
+                {
+                    MessageBox.Show("Nodo o Conexion agregada exitosamente");
+                    /*this.labelMensajes.Text = "Nodo o Conexion agregada exitosamente";
+                    System.Threading.Thread.Sleep(5000);
+                    this.labelMensajes.Text = "";*/
+                }
+                else
+                {
+                    MessageBox.Show("Hubo un error y no se pudo agregar el nuevo nodo o conexion");
+                }
+            }
         }
     }
 }

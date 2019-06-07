@@ -44,6 +44,8 @@
             this.labelEliminarInstrucciones = new System.Windows.Forms.Label();
             this.botonDijkstra = new System.Windows.Forms.Button();
             this.labelDijkstra = new System.Windows.Forms.Label();
+            this.buttonAgregarSinDireccion = new System.Windows.Forms.Button();
+            this.labelAgregarSinDireccion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelNodo1
@@ -108,7 +110,7 @@
             // 
             // botonPrintRaw
             // 
-            this.botonPrintRaw.Location = new System.Drawing.Point(480, 137);
+            this.botonPrintRaw.Location = new System.Drawing.Point(480, 209);
             this.botonPrintRaw.Name = "botonPrintRaw";
             this.botonPrintRaw.Size = new System.Drawing.Size(200, 23);
             this.botonPrintRaw.TabIndex = 7;
@@ -118,7 +120,7 @@
             // 
             // botonAdyacencia
             // 
-            this.botonAdyacencia.Location = new System.Drawing.Point(480, 183);
+            this.botonAdyacencia.Location = new System.Drawing.Point(480, 247);
             this.botonAdyacencia.Name = "botonAdyacencia";
             this.botonAdyacencia.Size = new System.Drawing.Size(200, 23);
             this.botonAdyacencia.TabIndex = 8;
@@ -144,7 +146,7 @@
             // 
             // botonEliminar
             // 
-            this.botonEliminar.Location = new System.Drawing.Point(480, 224);
+            this.botonEliminar.Location = new System.Drawing.Point(480, 286);
             this.botonEliminar.Name = "botonEliminar";
             this.botonEliminar.Size = new System.Drawing.Size(200, 23);
             this.botonEliminar.TabIndex = 11;
@@ -155,7 +157,7 @@
             // labelEliminarInstrucciones
             // 
             this.labelEliminarInstrucciones.AutoSize = true;
-            this.labelEliminarInstrucciones.Location = new System.Drawing.Point(391, 250);
+            this.labelEliminarInstrucciones.Location = new System.Drawing.Point(391, 312);
             this.labelEliminarInstrucciones.Name = "labelEliminarInstrucciones";
             this.labelEliminarInstrucciones.Size = new System.Drawing.Size(367, 34);
             this.labelEliminarInstrucciones.TabIndex = 12;
@@ -164,7 +166,7 @@
             // 
             // botonDijkstra
             // 
-            this.botonDijkstra.Location = new System.Drawing.Point(480, 306);
+            this.botonDijkstra.Location = new System.Drawing.Point(480, 364);
             this.botonDijkstra.Name = "botonDijkstra";
             this.botonDijkstra.Size = new System.Drawing.Size(200, 23);
             this.botonDijkstra.TabIndex = 13;
@@ -175,18 +177,40 @@
             // labelDijkstra
             // 
             this.labelDijkstra.AutoSize = true;
-            this.labelDijkstra.Location = new System.Drawing.Point(391, 332);
+            this.labelDijkstra.Location = new System.Drawing.Point(391, 390);
             this.labelDijkstra.Name = "labelDijkstra";
             this.labelDijkstra.Size = new System.Drawing.Size(348, 51);
             this.labelDijkstra.TabIndex = 14;
             this.labelDijkstra.Text = "Buscara la ruta mas corta entre el Nodo 1 y el Nodo 2\r\nignora la direccion de las" +
     " conexiones\r\n(simula que el grafo sea no dirigido)";
             // 
+            // buttonAgregarSinDireccion
+            // 
+            this.buttonAgregarSinDireccion.Location = new System.Drawing.Point(455, 137);
+            this.buttonAgregarSinDireccion.Name = "buttonAgregarSinDireccion";
+            this.buttonAgregarSinDireccion.Size = new System.Drawing.Size(264, 23);
+            this.buttonAgregarSinDireccion.TabIndex = 15;
+            this.buttonAgregarSinDireccion.Text = "Agregar Nodo/Conexion (Sin Direccion)";
+            this.buttonAgregarSinDireccion.UseVisualStyleBackColor = true;
+            this.buttonAgregarSinDireccion.Click += new System.EventHandler(this.buttonAgregarSinDireccion_Click);
+            // 
+            // labelAgregarSinDireccion
+            // 
+            this.labelAgregarSinDireccion.AutoSize = true;
+            this.labelAgregarSinDireccion.Location = new System.Drawing.Point(407, 163);
+            this.labelAgregarSinDireccion.Name = "labelAgregarSinDireccion";
+            this.labelAgregarSinDireccion.Size = new System.Drawing.Size(362, 34);
+            this.labelAgregarSinDireccion.TabIndex = 16;
+            this.labelAgregarSinDireccion.Text = "Funciona igual que el anterior, pero las conexiones que \r\ncrea son sin direccion";
+            this.labelAgregarSinDireccion.Click += new System.EventHandler(this.label1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelAgregarSinDireccion);
+            this.Controls.Add(this.buttonAgregarSinDireccion);
             this.Controls.Add(this.labelDijkstra);
             this.Controls.Add(this.botonDijkstra);
             this.Controls.Add(this.labelEliminarInstrucciones);
@@ -227,6 +251,8 @@
         private System.Windows.Forms.Label labelEliminarInstrucciones;
         private System.Windows.Forms.Button botonDijkstra;
         private System.Windows.Forms.Label labelDijkstra;
+        private System.Windows.Forms.Button buttonAgregarSinDireccion;
+        private System.Windows.Forms.Label labelAgregarSinDireccion;
     }
 }
 
