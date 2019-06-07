@@ -36,47 +36,10 @@ namespace intentoGrafos
         }
 
         //agrega un nuevo nodo a partir de un nodo inicial,
-        //no maneja pesos de las conexiones, pero eso no es grave de manejar,
-        //solo habria que aumentar un argumento mas del peso.
         //en caso de que no exista el nodo inicial, no agrega nada.
         //en caso de que existan el nodo inicial y el final, agrega una nueva conexion
         //Despues de verificar que esa conexion no exista
-        public bool addNodo(Nodo nodoInicio, string nom) {     
-            if (this.Nodos.Exists(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0)) {
-                Console.WriteLine("El nodo inicial existe: "+nodoInicio.Nombre);
-                Console.WriteLine("El nodo nuevo " + nom + " existe?: " + this.Nodos.Exists(x => x.Nombre.CompareTo(nom) == 0));
-                if (this.Nodos.Exists(x => x.Nombre.CompareTo(nom) == 0))
-                {
-                    Console.WriteLine("El nodo final existe: "+nom);
-                    //linea larga y fea, pero solo revisa si la conexion ya existe y devuelve una operacion fallida en ese caso.
-                    if (this.nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.Exists(x => (x.NodoInicio.Nombre.CompareTo(nodoInicio.Nombre) == 0) && (x.NodoFinal.Nombre.CompareTo(nom) == 0))) {
-                        Console.WriteLine("La conexion ya existe");
-                        return false;
-                    }
-                    //Aqui crea una nueva conexion, como las conexiones son diereccionadas una conexion inversa
-                    //se considera una conexion nueva
-                    Console.WriteLine("Creando nueva conexion entre " + nodoInicio.Nombre + " y " + nom + ".");
-                    Conexion nuevaConexion = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0));
-                    this.Nodos.Find(x => x.Nombre.CompareTo(nom) == 0).ListaConexiones.Add(nuevaConexion);
-                    this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.Add(nuevaConexion);
-                }
-                else
-                {
-                    //en caso de que el nodoFinal no exista, crea un nuevo nodo y crea y asigna la nueva conexion
-                    Console.WriteLine("Creando nuevo nodo " + nom + " y conectando a " + nodoInicio.Nombre);
-                    Nodo nodoNuevo = new Nodo(nom);
-                    Conexion nuevaConexion = new Conexion(this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0), nodoNuevo);
-                    nodoNuevo.ListaConexiones.Add(nuevaConexion);
-                    this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0).ListaConexiones.Add(nuevaConexion);
-                    this.Nodos.Add(nodoNuevo);
-                }
-                return true;
-            }
-            return addNodo(nom);
-        }
-
-        //Lo mismo que la anterior, pero ahora las conexiones tienen peso
-        public bool addNodo(Nodo nodoInicio, string nom, double peso)
+        public bool addNodo(Nodo nodoInicio, string nom, double peso = 1)
         {
             if (this.Nodos.Exists(x => x.Nombre.CompareTo(nodoInicio.Nombre) == 0))
             {
@@ -297,6 +260,7 @@ namespace intentoGrafos
             return printer;
         }
 
+        //Esto es para el Dijkstra, suma los pesos de un grupo de conexiones
         private double sumAllWeights(List<Conexion> conexiones) {
             double suma = 0;
             foreach (Conexion conexion in conexiones) {
