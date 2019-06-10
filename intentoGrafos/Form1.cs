@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,6 +30,10 @@ namespace intentoGrafos
         //Todos los botones hacen algo llamando a alguna funcion del grafo
         // Este agrega nodos y / o conexiones con direccion
 
+        public void setLabelMensajes(string contenido) {
+            this.labelMensajes.Text = contenido;
+        }
+
         private void botonAgregarNodo_Click(object sender, EventArgs e)
         {
             String nodoInicial = this.textoNodo1.Text;
@@ -43,6 +48,13 @@ namespace intentoGrafos
                 bool exito = this.grafo.addNodo(nodoInicial, nodoFinal, peso);
                 if (exito)
                 {
+                    /*ThreadStart cambiarNombreRef = new ThreadStart(delegate () {
+                        ((Form1)this.Owner).setLabelMensajes("Nodo o Conexion agregada exitosamente");
+                        System.Threading.Thread.Sleep(5000);
+                        ((Form1)this.Owner).setLabelMensajes("");
+                    });
+                    Thread cambiarNombre = new Thread(cambiarNombreRef);
+                    cambiarNombre.Start();*/
                     MessageBox.Show("Nodo o Conexion agregada exitosamente");
                     /*this.labelMensajes.Text = "Nodo o Conexion agregada exitosamente";
                     System.Threading.Thread.Sleep(5000);
@@ -58,6 +70,13 @@ namespace intentoGrafos
                 bool exito = this.grafo.addNodo(nodoInicial, nodoFinal);
                 if (exito)
                 {
+                    /*ThreadStart cambiarNombreRef = new ThreadStart(delegate () {
+                        ((Form1)this.Owner).setLabelMensajes("Nodo o Conexion agregada exitosamente");
+                        System.Threading.Thread.Sleep(5000);
+                        ((Form1)this.Owner).setLabelMensajes("");
+                    });
+                    Thread cambiarNombre = new Thread(cambiarNombreRef);
+                    cambiarNombre.Start();*/
                     MessageBox.Show("Nodo o Conexion agregada exitosamente");
                     /*this.labelMensajes.Text = "Nodo o Conexion agregada exitosamente";
                     System.Threading.Thread.Sleep(5000);
@@ -119,6 +138,13 @@ namespace intentoGrafos
                 bool exito = this.grafo.addNodoNoDirigido(nodoInicial, nodoFinal, peso);
                 if (exito)
                 {
+                    /*ThreadStart cambiarNombreRef = new ThreadStart(delegate () {
+                        ((Form1)this.Owner).setLabelMensajes("Nodo o Conexion agregada exitosamente");
+                        System.Threading.Thread.Sleep(5000);
+                        ((Form1)this.Owner).setLabelMensajes("");
+                    });
+                    Thread cambiarNombre = new Thread(cambiarNombreRef);
+                    cambiarNombre.Start();*/
                     MessageBox.Show("Nodo o Conexion agregada exitosamente");
                     /*this.labelMensajes.Text = "Nodo o Conexion agregada exitosamente";
                     System.Threading.Thread.Sleep(5000);
@@ -134,6 +160,13 @@ namespace intentoGrafos
                 bool exito = this.grafo.addNodoNoDirigido(nodoInicial, nodoFinal);
                 if (exito)
                 {
+                    /*ThreadStart cambiarNombreRef = new ThreadStart(delegate () {
+                        ((Form1)this.Owner).setLabelMensajes("Nodo o Conexion agregada exitosamente");
+                        System.Threading.Thread.Sleep(5000);
+                        ((Form1)this.Owner).setLabelMensajes("");
+                    });
+                    Thread cambiarNombre = new Thread(cambiarNombreRef);
+                    cambiarNombre.Start();*/
                     MessageBox.Show("Nodo o Conexion agregada exitosamente");
                     /*this.labelMensajes.Text = "Nodo o Conexion agregada exitosamente";
                     System.Threading.Thread.Sleep(5000);
