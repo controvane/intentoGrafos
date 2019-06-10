@@ -31,7 +31,7 @@ namespace intentoGrafos
 
         private void botonAgregarNodo_Click(object sender, EventArgs e)
         {
-            Nodo nodoInicial = new Nodo(this.textoNodo1.Text);
+            String nodoInicial = this.textoNodo1.Text;
             String nodoFinal = this.textoNodo2.Text;
             try
             {
@@ -107,7 +107,7 @@ namespace intentoGrafos
         //Este boton agrega Nodos y/o conexiones sin direccion
         private void buttonAgregarSinDireccion_Click(object sender, EventArgs e)
         {
-            Nodo nodoInicial = new Nodo(this.textoNodo1.Text);
+            String nodoInicial = this.textoNodo1.Text;
             String nodoFinal = this.textoNodo2.Text;
             try
             {

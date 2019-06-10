@@ -186,9 +186,9 @@
             // 
             // buttonAgregarSinDireccion
             // 
-            this.buttonAgregarSinDireccion.Location = new System.Drawing.Point(455, 137);
+            this.buttonAgregarSinDireccion.Location = new System.Drawing.Point(437, 137);
             this.buttonAgregarSinDireccion.Name = "buttonAgregarSinDireccion";
-            this.buttonAgregarSinDireccion.Size = new System.Drawing.Size(264, 23);
+            this.buttonAgregarSinDireccion.Size = new System.Drawing.Size(284, 23);
             this.buttonAgregarSinDireccion.TabIndex = 15;
             this.buttonAgregarSinDireccion.Text = "Agregar Nodo/Conexion (Sin Direccion)";
             this.buttonAgregarSinDireccion.UseVisualStyleBackColor = true;
