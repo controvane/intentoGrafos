@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,16 @@ namespace intentoGrafos
         public bool isEmpty() {
             return (this.Nodos.Count() <= 0) ? true : false;
         }
+
+        /*public void fillFromDataBase() {
+            Conectador conectador = new Conectador("RWBY\\SQLEXPRESS", "Nodo");
+            DataTable nodosImportados = conectador.closedProcedure("MostrarIntereses", new Dictionary<string, object>());
+            foreach (DataRow row in nodosImportados.Rows) {
+                var contenido = new {
+                    posX 
+                };
+            }
+        }*/
 
         //permite agregar el primer Nodo a partir de solo su nombre
         //solo funciona si no hay ningun nodo en el grafo
@@ -231,7 +242,8 @@ namespace intentoGrafos
                                 conexiones.AddRange(posibleRuta);
                             }
                         }
-                        nodosVisitados.Clear();
+                        //nodosVisitados.Clear();
+                        nodosVisitados.Remove(nodosVisitados.Find(x => x.Nombre.CompareTo(nodoInicial.Nombre) == 0));
                     }
                 }
                 else if (conexita.NodoInicio.Nombre.CompareTo(nodoInicial.Nombre) == 0) {
@@ -249,7 +261,8 @@ namespace intentoGrafos
                                 conexiones.AddRange(posibleRuta);
                             } 
                         }
-                        nodosVisitados.Clear();
+                        //nodosVisitados.Clear();
+                        nodosVisitados.Remove(nodosVisitados.Find(x => x.Nombre.CompareTo(nodoInicial.Nombre) == 0));
                     }
                 }
             }
