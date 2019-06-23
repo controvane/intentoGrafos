@@ -112,7 +112,7 @@ namespace intentoGrafos
         //esta hace Dijkstra entre dos nodos
         private void botonDijkstra_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(this.grafo.printableDijkstraNoDirigido(this.textoNodo1.Text, this.textoNodo2.Text));
+            MessageBox.Show(this.grafo.printableDijkstraDirigido(this.textoNodo1.Text, this.textoNodo2.Text));
         }
 
         //esto es un missclick al diseñar el form y no se como quitarlo sin jorobar al form

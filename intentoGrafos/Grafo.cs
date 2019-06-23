@@ -201,6 +201,8 @@ namespace intentoGrafos
         }
 
         //esta ignorando la direccion del grafo, despues es dijkstra normal
+        //SI QUIERES IGNORAR LA DIRECCION ES MEJOR USAR ADDNODONODIRIGIDO Y EL OTRO DIJKSTRA
+        //FUNCION DESPRECIADA
         public List<Conexion> DijkstraNoDirigido(string nodoInicio, string nodoFin,List<Nodo> nodosVisitados = null) {
             
             if (nodosVisitados == null) {
@@ -237,7 +239,7 @@ namespace intentoGrafos
                         {
                             conexiones.Clear();
                             conexiones.Add(conexita);
-                            if (posibleRuta.Count == 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
+                            if (posibleRuta.Count >= 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
                             {
                                 conexiones.AddRange(posibleRuta);
                             }
@@ -256,7 +258,7 @@ namespace intentoGrafos
                         {
                             conexiones.Clear();
                             conexiones.Add(conexita);
-                            if (posibleRuta.Count == 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
+                            if (posibleRuta.Count >= 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
                             {
                                 conexiones.AddRange(posibleRuta);
                             } 
@@ -270,12 +272,81 @@ namespace intentoGrafos
             return conexiones;
         }
 
-        //solo imprime dijstra, no quiero importar Conexion a Form 1
+        //si funciona asi, entonces para hacerlo no dirigido solo hay que usar los que crean conexiones en los dos sentidos
+        public List<Conexion> DijkstraDirigido(string nodoInicio, string nodoFin, List<Nodo> nodosVisitados = null)
+        {
+
+            if (nodosVisitados == null)
+            {
+                Console.WriteLine("Estoy declarando la lista");
+                nodosVisitados = new List<Nodo>();
+            }
+            Nodo nodoInicial = this.Nodos.Find(x => x.Nombre.CompareTo(nodoInicio) == 0);
+            Nodo nodoFinal = this.Nodos.Find(x => x.Nombre.CompareTo(nodoFin) == 0);
+            List<Conexion> conexiones = new List<Conexion>();
+            //solo estoy agregando una conexion token para comparar
+            //su peso es de infinito
+            conexiones.Add(new Conexion(new Nodo("ej1"), new Nodo("ej2"), double.PositiveInfinity));
+            //esto ignora la direccion, habria que quitar la primera condicion del exists
+            if (nodoInicial.ListaConexiones.Exists(x => (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)) && sumAllWeights(conexiones) > nodoInicial.ListaConexiones.Find(x =>(x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)).Peso)
+            {
+                Console.WriteLine("voy a devolver la conexion");
+                conexiones.Clear();
+                conexiones.Add(nodoInicial.ListaConexiones.Find(x => (x.NodoFinal.Nombre.CompareTo(nodoFinal.Nombre) == 0)));
+                return conexiones;
+            }
+            //la idea es que revise el peso de cada conexion y lo ponga temporalmente en conexiones, quedandose siempre con el menor
+            //Se me acabaron las ideas para nombres de variables... lo siento
+            Console.WriteLine("Nodo Actual: " + nodoInicial.Nombre);
+            foreach (Conexion conexita in nodoInicial.ListaConexiones)
+            {
+                Console.WriteLine("Conexion actual: " + conexita.Nombre);
+                //Como tiene que ignorar la direccion, checkeo si el nodo final o el inicial de la conexion son el nodo actual
+                if (conexita.NodoInicio.Nombre.CompareTo(nodoInicial.Nombre) == 0)
+                {
+                    //Lo mismo que en el anterior, pero con el otro nodo, para ignorar la direccion
+                    if (!nodosVisitados.Exists(x => x.Nombre.CompareTo(conexita.NodoInicio.Nombre) == 0))
+                    {
+                        Console.WriteLine("Conexion actual: " + conexita.Nombre);
+                        nodosVisitados.Add(nodoInicial);
+                        List<Conexion> posibleRuta = DijkstraDirigido(conexita.NodoFinal.Nombre, nodoFin, nodosVisitados);
+                        if (sumAllWeights(conexiones) > sumAllWeights(posibleRuta))
+                        {
+                            conexiones.Clear();
+                            conexiones.Add(conexita);
+                            if (posibleRuta.Count >= 1 && !conexiones.Exists(x => x.Nombre.CompareTo(posibleRuta[0].Nombre) == 0))
+                            {
+                                conexiones.AddRange(posibleRuta);
+                            }
+                        }
+                        //nodosVisitados.Clear();
+                        nodosVisitados.Remove(nodosVisitados.Find(x => x.Nombre.CompareTo(nodoInicial.Nombre) == 0));
+                    }
+                }
+            }
+            Console.WriteLine("Pasando al nodo siguiente\r\n--------------------------------------------");
+            return conexiones;
+        }
+
+        //solo imprime dijkstra, no quiero importar Conexion a Form 1
         public String printableDijkstraNoDirigido(String nodoInicial, String nodoFinal) {
             List<Conexion> rutaCritica = DijkstraNoDirigido(nodoInicial, nodoFinal);
             String printer = "";
             foreach (Conexion conexion in rutaCritica) {
                 printer += conexion.Nombre + " Peso: " + conexion.Peso+"\r\n";
+            }
+            printer += "Peso total del recorrido: " + sumAllWeights(rutaCritica);
+            return printer;
+        }
+
+        //solo imprime dijkstra, no quiero importar Conexion a Form 1
+        public String printableDijkstraDirigido(String nodoInicial, String nodoFinal)
+        {
+            List<Conexion> rutaCritica = DijkstraDirigido(nodoInicial, nodoFinal);
+            String printer = "";
+            foreach (Conexion conexion in rutaCritica)
+            {
+                printer += conexion.Nombre + " Peso: " + conexion.Peso + "\r\n";
             }
             printer += "Peso total del recorrido: " + sumAllWeights(rutaCritica);
             return printer;
